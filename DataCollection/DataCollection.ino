@@ -118,7 +118,7 @@ void loop()
   }
 
   modem.poll();
-  delay(2000);
+  delay(10000);
 
 
 }
