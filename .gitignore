@@ -75,5 +75,4 @@ obj/
 # Raspberry Pi and embedded systems
 *.img
 *.iso
-.env
 
