@@ -7,10 +7,11 @@ networks:
 volumes:
     influxdb-data:
     grafana-data:
+    shared-config:  # New shared volume for configuration
 
 services:
     influxdb:
-        container_name: influxdb
+        container_name: influxdb_redeploy
         image: influxdb:latest
         ports: 
             - 8086:8086 
@@ -18,11 +19,21 @@ services:
             - tig-network 
         volumes:
             - influxdb-data:/var/lib/influxdb
+            - ./telegraf2.conf:/etc/telegraf/telegraf.conf
+            - ./startup_config.sh:/startup_config.sh  # Mount startup script
+            - shared-config:/shared-config  # Shared volume for tokens
+        healthcheck:
+            test: ["CMD", "bash", "-c", "[ -f /shared-config/config_ready ]"]
+            interval: 5s
+            timeout: 5s
+            retries: 12
+            start_period: 10s
+        entrypoint: ["/bin/bash", "-c", "chmod +x /startup_config.sh && /startup_config.sh"]
         restart: always
 
     grafana:
         image: grafana/grafana:latest
-        container_name: grafana
+        container_name: grafana_redeploy
         ports: 
             - 3000:3000
         environment:
@@ -35,9 +46,11 @@ services:
         restart: always        
 
     telegraf:
+        container_name: telegraf_redeploy
         image: telegraf:latest
         depends_on: 
-            - "influxdb"
+            influxdb:
+                condition: service_healthy
         environment:
             HOST_NAME: "telegraf"
             INFLUXDB_HOST: "influxdb"
@@ -45,6 +58,8 @@ services:
             DATABASE: "iot"
         volumes:
             - ./telegraf.conf:/etc/telegraf/telegraf.conf
+            - shared-config:/shared-config  # Mount the shared volume
+        entrypoint: ["/bin/bash", "-c", "source /shared-config/influx_env.sh && telegraf"]
         tty: true
         networks: 
             - tig-network

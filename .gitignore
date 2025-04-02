@@ -1,0 +1,79 @@
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+*.pyo
+__pycache__/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+
+# Python virtual environments
+venv/
+env/
+ENV/
+.venv/
+.Python
+
+# IoT specific
+config.ini
+credentials.json
+secrets.yaml
+*.key
+*.pem
+*.crt
+
+# Build artifacts
+bin/
+obj/
+
+# Arduino
+.pio/
+
+# Raspberry Pi and embedded systems
+*.img
+*.iso
+.env
+.env
