@@ -19,7 +19,7 @@ services:
             - tig-network 
         volumes:
             - influxdb-data:/var/lib/influxdb
-            - ./telegraf2.conf:/etc/telegraf/telegraf.conf
+            - ./telegraf-influx.conf:/etc/telegraf/telegraf.conf
             - ./startup_config.sh:/startup_config.sh  # Mount startup script
             - shared-config:/shared-config  # Shared volume for tokens
         healthcheck:
