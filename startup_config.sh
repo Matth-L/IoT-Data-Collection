@@ -60,4 +60,4 @@ echo "Configuration complete!"
 touch /shared-config/config_ready
 
 # Wait for the InfluxDB process to finish
-wait $INFLUXD_PID
+wait $INFLUXD_PID 
