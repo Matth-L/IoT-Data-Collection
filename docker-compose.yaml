@@ -9,12 +9,12 @@ volumes:
 
 services:
     influxdb:
-        container_name: influxdb_redeploy
+        container_name: influxdb
         image: influxdb:latest
-        ports: 
-            - 8086:8086 
+        ports:
+            - 8086:8086
         networks:
-            - tig-network 
+            - tig-network
         volumes:
             - influxdb-data:/var/lib/influxdb
             - ./telegraf-influx.conf:/etc/telegraf/telegraf.conf
@@ -31,7 +31,7 @@ services:
 
     grafana:
         image: grafana/grafana:latest
-        container_name: grafana_redeploy
+        container_name: grafana
         ports: 
             - 3000:3000
         environment:
@@ -41,10 +41,10 @@ services:
             - tig-network
         volumes:
             - grafana-data:/var/lib/grafana
-        restart: always        
+        restart: always  
 
     telegraf:
-        container_name: telegraf_redeploy
+        container_name: telegraf
         image: telegraf:latest
         depends_on: 
             influxdb:
