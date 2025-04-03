@@ -10,8 +10,7 @@
 #define TEMPERATURE A0
 #define HUMIDITY A1
 
-
-#define NUM_LED 1     // Number of LEDs in a strip
+#define NUM_LED 1 // Number of LEDs in a strip
 
 Adafruit_NeoPixel RGB_Strip = Adafruit_NeoPixel(NUM_LED, PIN_LED, NEO_GRB + NEO_KHZ800); // initaliser LED
 
@@ -36,16 +35,16 @@ void connect_TTN()
 
   connected = modem.joinOTAA(appEui, appKey); // Connexion en mode OTAA
 
-  while (!connected) { // Reconnexion si echec
+  while (!connected)
+  { // Reconnexion si echec
     Serial.println("Retrying...");
     connected = modem.joinOTAA(appEui, appKey);
   }
   Serial.println("Connected.");
 }
 
-
-
-void setup() {
+void setup()
+{
   // Init serial
   Serial.begin(115200);
 
@@ -54,7 +53,7 @@ void setup() {
   // Init LED
   RGB_Strip.begin();
   RGB_Strip.show();
-  RGB_Strip.setBrightness(20);    // Set brightness, 0-255 (darkest - brightest)
+  RGB_Strip.setBrightness(20); // Set brightness, 0-255 (darkest - brightest)
 
   // Init Sensor
   pinMode(DETECTION_SENSOR, INPUT);
@@ -63,7 +62,6 @@ void setup() {
   // Init Humidity
   pinMode(HUMIDITY, INPUT);
 }
-
 
 double temperature;
 int temp;
@@ -74,27 +72,28 @@ byte payload[5] = {0};
 
 void loop()
 {
-    // If something is detected, it turns the led red
-    // Elsewhere, it turns it back blue
-    detection = digitalRead(DETECTION_SENSOR);
-    Serial.print("Detection Sensor Value:");
-    Serial.println(detection);
-    if (detection)
-    {
-      Serial.println("On");
-      colorWipe(RGB_Strip.Color(255, 0, 0), 1000);  // Red
-    }
-    else {
-      Serial.println("Off");
-      colorWipe(RGB_Strip.Color(0, 0, 255), 1000);  // Blue
-    }
+  // If something is detected, it turns the led red
+  // Elsewhere, it turns it back blue
+  detection = digitalRead(DETECTION_SENSOR);
+  Serial.print("Detection Sensor Value:");
+  Serial.println(detection);
+  if (detection)
+  {
+    Serial.println("On");
+    colorWipe(RGB_Strip.Color(255, 0, 0), 1000); // Red
+  }
+  else
+  {
+    Serial.println("Off");
+    colorWipe(RGB_Strip.Color(0, 0, 255), 1000); // Blue
+  }
 
   humidity = analogRead(HUMIDITY); // Lecture humidité
   Serial.print("Moisture Sensor Value:");
   Serial.println(humidity);
   delay(100);
 
-  temperature = analogRead(TEMPERATURE); // Lecture temperature
+  temperature = analogRead(TEMPERATURE);   // Lecture temperature
   temperature = temperature * 3.3 / 10.24; // Conversion temperature
   temp = (int)temperature;
   Serial.print("Temperature Sensor Value:");
@@ -109,23 +108,26 @@ void loop()
   delay(100);
 
   modem.beginPacket();
-  modem.write(payload, sizeof(payload)); 
-  int err = modem.endPacket(true); 
-  if (err > 0) {
+  modem.write(payload, sizeof(payload));
+  int err = modem.endPacket(true);
+  if (err > 0)
+  {
     Serial.println("Message sent successfully");
-  } else {
+  }
+  else
+  {
     Serial.println("Error sending message");
   }
 
   modem.poll();
   delay(10000);
-
-
 }
 
 // Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint16_t wait) {
-  for (uint16_t i = 0; i < RGB_Strip.numPixels(); i++) {
+void colorWipe(uint32_t c, uint16_t wait)
+{
+  for (uint16_t i = 0; i < RGB_Strip.numPixels(); i++)
+  {
     RGB_Strip.setPixelColor(i, c);
     RGB_Strip.show();
     delay(wait);

@@ -11,6 +11,8 @@ services:
     influxdb:
         container_name: influxdb
         image: influxdb:latest
+        environment:
+        - MQTT_PASSWORD=${MQTT_PASSWORD}
         ports:
             - 8086:8086
         networks:
@@ -54,6 +56,7 @@ services:
             INFLUXDB_HOST: "influxdb"
             INFLUXDB_PORT: "8086"
             DATABASE: "iot"
+            MQTT_PASSWORD: ${MQTT_PASSWORD}
         volumes:
             - ./telegraf.conf:/etc/telegraf/telegraf.conf
             - shared-config:/shared-config  # Mount the shared volume
