@@ -12,7 +12,7 @@ services:
         container_name: influxdb
         image: influxdb:latest
         environment:
-        - MQTT_PASSWORD=${MQTT_PASSWORD}
+            - MQTT_PASSWORD=${MQTT_PASSWORD}
         ports:
             - 8086:8086
         networks:
