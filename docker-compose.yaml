@@ -66,3 +66,14 @@ services:
             - tig-network
         privileged: true
         restart: always
+
+    mailslurper:
+        container_name: mailslurper
+        image: marcopas/docker-mailslurper:latest
+        ports:
+            - 2500:2500
+            - 8080:8080
+            - 8085:8085
+        networks:
+            - tig-network
+        restart: always
