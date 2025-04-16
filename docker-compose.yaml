@@ -5,7 +5,7 @@ networks:
 volumes:
     influxdb-data:
     grafana-data:
-    shared-config:  # New shared volume for configuration
+    shared-config: 
 
 services:
     influxdb:
@@ -37,12 +37,25 @@ services:
         ports: 
             - 3000:3000
         environment:
+            #grafana admin default login
             GF_SECURITY_ADMIN_USER: grafadmin
             GF_SECURITY_ADMIN_PASSWORD: grafpw
+            # smtp login
+            SMTP_HOST : ${SMTP_HOST}
+            SMTP_PORT : ${SMTP_PORT}
+            SMTP_USER : ${SMTP_USER}
+            SMTP_USER_ID : ${SMTP_USER_ID}
+            SMTP_USER_PW : ${SMTP_USER_PW}
         networks: 
             - tig-network
         volumes:
             - grafana-data:/var/lib/grafana
+            # loading dashboard and alerting on startup
+            - ./grafana/dashboards/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
+            - ./grafana/dashboards:/var/lib/grafana/dashboards
+            - ./grafana/alerting:/etc/grafana/provisioning/alerting
+            # loading smtp config
+            - ./grafana/grafana.ini:/etc/grafana/grafana.ini
         restart: always  
 
     telegraf:
@@ -65,15 +78,4 @@ services:
         networks: 
             - tig-network
         privileged: true
-        restart: always
-
-    mailslurper:
-        container_name: mailslurper
-        image: marcopas/docker-mailslurper:latest
-        ports:
-            - 2500:2500
-            - 8080:8080
-            - 8085:8085
-        networks:
-            - tig-network
         restart: always
