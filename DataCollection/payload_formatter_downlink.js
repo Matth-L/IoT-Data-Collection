@@ -3,21 +3,18 @@ function decodeDownlink(input) {
 
     let value = (bytes[0] << 8) | bytes[1];
 
-    let warning = false;
-    let alarm = false;
+    let state = "normal";
 
     if (value == 1) {
-        warning = true;
+        state = "warning";
     } else if (value == 2) {
-        alarm = true;
+        state = "alert";
     }
     // Gestion du signe (si valeur négative sur 16 bits)
 
     return {
         data: {
-            value: value,
-            warning: warning,
-            alarm: alarm
+            securityState: state,
         }
     };
 }
