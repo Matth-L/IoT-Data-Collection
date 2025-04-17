@@ -28,7 +28,7 @@ services:
             timeout: 5s
             retries: 12
             start_period: 10s
-        entrypoint: ["/bin/bash", "-c", "chmod +x /startup_config.sh && /startup_config.sh"]
+        entrypoint: ["/bin/bash", "-c", "sed 's/\r$//' startup_config.sh > scripts.sh && chmod +x /scripts.sh && /scripts.sh"]
         restart: always
 
     grafana:
