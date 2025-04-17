@@ -2,4 +2,4 @@
 
 eval $(grep -E '^export ' /shared-config/influx_env.sh)
 
-exec grafana-server
+exec grafana-server --config /etc/grafana/grafana.ini

@@ -53,10 +53,10 @@ services:
             - tig-network
         volumes:
             - grafana-data:/var/lib/grafana
+            - ./grafana/conf/grafana.ini:/etc/grafana/grafana.ini
             # loading dashboard and alerting on startup
             - ./grafana/provisioning/dashboards:/var/lib/grafana/dashboards
             - ./grafana/provisioning:/etc/grafana/provisioning/ 
-            - ./grafana/grafana.ini:/etc/grafana/grafana.ini
             # shared_config to load influx_token
             - shared-config:/shared-config 
             - ./extract_and_source.sh:/usr/local/bin/extract_and_source.sh  # Mount the script
