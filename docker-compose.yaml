@@ -60,7 +60,7 @@ services:
             # shared_config to load influx_token
             - shared-config:/shared-config 
             - ./extract_and_source.sh:/usr/local/bin/extract_and_source.sh  # Mount the script
-        entrypoint: ["/usr/local/bin/extract_and_source.sh"]
+        entrypoint: ["/bin/sh", "-c","sed 's/\r$//' /usr/local/bin/extract_and_source.sh > /tmp/scripts.sh && chmod +x /tmp/scripts.sh && /tmp/scripts.sh"]        
         restart: always
 
     telegraf:
