@@ -33,6 +33,9 @@ services:
 
     grafana:
         image: grafana/grafana:latest
+        depends_on: 
+            influxdb:
+                condition: service_healthy
         container_name: grafana
         ports: 
             - 3000:3000
@@ -51,12 +54,14 @@ services:
         volumes:
             - grafana-data:/var/lib/grafana
             # loading dashboard and alerting on startup
-            - ./grafana/dashboards/dashboard.yaml:/etc/grafana/provisioning/dashboards/main.yaml
-            - ./grafana/dashboards:/var/lib/grafana/dashboards
-            - ./grafana/alerting:/etc/grafana/provisioning/alerting
-            # loading smtp config
+            - ./grafana/provisioning/dashboards:/var/lib/grafana/dashboards
+            - ./grafana/provisioning:/etc/grafana/provisioning/ 
             - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-        restart: always  
+            # shared_config to load influx_token
+            - shared-config:/shared-config 
+            - ./extract_and_source.sh:/usr/local/bin/extract_and_source.sh  # Mount the script
+        entrypoint: ["/usr/local/bin/extract_and_source.sh"]
+        restart: always
 
     telegraf:
         container_name: telegraf
