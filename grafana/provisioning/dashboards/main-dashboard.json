@@ -339,8 +339,8 @@
         "dashboardAlerts": false,
         "datasource": "-- Grafana --",
         "folder": {
-          "title": "sensor-test",
-          "uid": "feieilpmjp1q8c"
+          "title": "Grafalerts",
+          "uid": "cej74ykge8m4ge"
         },
         "groupBy": [],
         "groupMode": "default",
@@ -455,6 +455,7 @@
     }
   ],
   "preload": false,
+  "refresh": "5s",
   "schemaVersion": 41,
   "tags": [],
   "templating": {
