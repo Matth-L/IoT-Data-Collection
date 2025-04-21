@@ -4,10 +4,10 @@ This project aims to develop a custom IoT solution to replace the Cayenne myDevi
 
 ### Key Features and Implementation 🚀
 
-- **Hardware**: Utilized an MKR1310 board equipped with sensors for:
+- **Hardware**: MKR1310 board equipped with sensors for:
   - Temperature 
   - Humidity 
-  - Presence 
+  - Motion 
 
 - **Data Flow**:
   - Sensor data is transmitted to The Things Stack.
@@ -18,8 +18,8 @@ This project aims to develop a custom IoT solution to replace the Cayenne myDevi
 
 - **Alert Mechanisms**:
   - Email notifications 📧
-  - Discord messages 💬
-  - SMS alerts (functional with Canadian phone numbers) 📱
+  - Discord messages (Discord bot API) 💬
+  - SMS alerts (Twilio API integration) 📱
 
 
 ### How to set it up and configure it 🚀
@@ -41,13 +41,25 @@ Access Grafana using the following address: [http://localhost:3000](http://local
 Ensure you have a `.env` file available with the following information:
 
 ```env
-MQTT_PASSWORD=your-mqtt-password
-
-SMTP_HOST=your-smtp-server
-SMTP_PORT=your-port
-SMTP_USER=the-email-that-will-send-data
+MQTT_PASSWORD=
 
 # Note: We used Mailjet, so this section may vary based on your provider
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USER=
 SMTP_USER_ID=
 SMTP_USER_PW=
+
+DISCORD_TOKEN=
+DISCORD_CHANNEL_ID=
+
+TTN_TENANT=
+TTN_APPLICATION_ID=
+TTN_DEVICE_ID=
+
+TWILIO_SID=
+TWILIO_TOKEN=
+# NB : Numbers in international format with (+) sign and country code (eg : +18004444444)
+TWILIO_ORIGIN_NUMBER=
+TWILIO_DESTINATION_NUMBER=
 ```
