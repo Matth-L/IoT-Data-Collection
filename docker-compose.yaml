@@ -84,3 +84,23 @@ services:
             - tig-network
         privileged: true
         restart: always
+
+    alertbot:
+        container_name: alertbot
+        build: ./alertbot  # Path to your Flask+Discord bot Dockerfile
+        ports:
+            - "5000:5000"  # Expose Flask webhook
+        networks:
+            - tig-network
+        environment:
+            DISCORD_TOKEN: ${DISCORD_TOKEN}
+            DISCORD_CHANNEL_ID: ${DISCORD_CHANNEL_ID}
+            TTN_TENANT: ${TTN_TENANT}
+            TTN_APPLICATION_ID: ${TTN_APPLICATION_ID}
+            TTN_DEVICE_ID: ${TTN_DEVICE_ID}
+            MQTT_PASSWORD: ${MQTT_PASSWORD}
+            TWILIO_SID: ${TWILIO_SID}
+            TWILIO_TOKEN: ${TWILIO_TOKEN}
+            TWILIO_ORIGIN_NUMBER: ${TWILIO_ORIGIN_NUMBER}
+            TWILIO_DESTINATION_NUMBER: ${TWILIO_DESTINATION_NUMBER}
+        restart: always

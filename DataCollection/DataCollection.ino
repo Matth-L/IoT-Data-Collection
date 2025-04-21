@@ -6,7 +6,6 @@
 // Define Pins
 #define PIN_LED 0
 #define DETECTION_SENSOR 6
-#define BUZZER 8
 #define TEMPERATURE A0
 #define HUMIDITY A1
 #define BUZZER_PIN 9

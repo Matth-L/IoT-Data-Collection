@@ -76,3 +76,5 @@ obj/
 *.img
 *.iso
 
+test.py
+test2.py
